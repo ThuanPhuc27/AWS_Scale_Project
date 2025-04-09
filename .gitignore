@@ -1,0 +1,8 @@
+task-manager-be/node_modules/
+task-manager-be/.env
+task-manager-fe/.env
+
+*.backup
+*.tfstate
+*.hcl
+.terraform

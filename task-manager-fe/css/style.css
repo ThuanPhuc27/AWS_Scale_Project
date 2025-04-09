@@ -1,0 +1,134 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+/* https://unsplash.com/photos/cxE7SXKnzv0 */
+body {
+    background-image: url("../images/background2.jpg");
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover; /* Resize the background image to cover the entire container */
+}
+ /*Add Cards Style */
+.cardstyle {
+    width: 40rem;
+    height: 22rem;
+    background-color:#eddec79b;
+    border-radius: 15px;
+}
+@media (max-width: 768px) {
+    .cardstyle {
+        width: 19rem;
+    }
+}
+
+.list-group-item {
+    background-color: rgba(255, 255, 255, 0);
+    border: none;
+}
+
+/*Buttons of Add Cards style*/
+
+.btn-outline-success{
+    height: min-content;
+    width: min-content;
+}
+
+.btn-outline-danger{
+    height: min-content;
+    width: min-content;
+}
+
+/*New task button at the top*/
+#newTask {
+    border-color: none;
+    /* font-family: cambria; */
+    border-radius: 20px !important;
+    border-color: none ;
+    /* font-family:cursive; */
+    font-size: initial;
+    background-color:  #097380;
+    color:rgb(240, 236, 223);
+    margin:25px;
+}
+
+/*form body */
+.form-body{
+    background-color: #FFFFFF90 !important;
+    border-radius: 30px;
+    padding: 10px;
+    border: none;
+}
+form {
+    background-color: #b3c9cc31;
+    padding: 10px;
+    border-radius: 20px;
+}
+
+.card-body {
+    background-color: #FFFFFF90 !important;
+    border-radius: 30px;
+    padding: 10px;
+    border: none;
+}
+
+  /* formating Add Task Button */
+  .add-task{
+    border-radius: 15px !important;
+    border-color: none ;
+    /* font-family:cursive; */
+    font-size: initial;
+    background-color:#ff6113;
+    color:rgb(240, 236, 223);
+    align-items: left !important;
+
+}
+
+/*Title Task List*/
+h1 {
+    /* font-family:cursive; */
+    font-weight: bolder;
+    color: #09545d;
+    font-size: 2.7em;
+    letter-spacing: 0.2em;
+
+}
+
+/*labels*/
+.bold-label {
+    /* font-family:cursive; */
+    font-size: 1.2em;
+}
+
+input {
+    border-radius: 20px !important;
+    border: none !important;
+}
+
+select {
+    border-radius: 20px !important;
+    border: none !important;
+}
+
+.list-group{
+    border-radius: 10px;
+    padding: 80px;
+
+}
+
+
+/*Display cards labels */
+.card-title{
+    /* font-family:cursive; */
+    font-weight:bold;
+    color:#09545d;
+}
+h6{
+    font-weight:bold;
+    color: #09545d ;
+}
+.strong{
+    /*font-family:initial;*/
+    color: rgba(20, 20, 20, 0.787);
+}
