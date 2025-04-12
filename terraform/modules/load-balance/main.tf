@@ -23,7 +23,7 @@ data "aws_route53_zone" "dns" {
 
 resource "aws_route53_record" "app_alias" {
   zone_id = data.aws_route53_zone.dns.zone_id
-  name    = "lux.lptdevops.com"
+  name    = "taskmanager.lptdevops.com"
   type    = "A"
 
   alias {

@@ -23,7 +23,6 @@ module "networking" {
 
 module "security" {
   source = "../modules/security"
-
   region = var.region
   vpc_id = module.networking.vpc_id
 }
@@ -31,7 +30,6 @@ module "security" {
 module "frontend" {
   source = "../modules/frontend"
   region = var.region
-
 }
 
 module "bastion" {
@@ -43,7 +41,7 @@ module "bastion" {
 }
 
 module "database" {
-  source   = "../modules/database"
+  source   = "../modules/database-mysql"
   db_subnet_group_name  = module.networking.db_subnet_group_name
   db_security_group_ids = [module.security.database_security_group_id]
   db_username = var.db_username
@@ -51,25 +49,32 @@ module "database" {
   db_name  = var.db_name
 }
 
+module "backend" {
+  source = "../modules/backend"
+  region = var.region
+  subnet_id = module.networking.private_subnet_ids[0]
+  instance_type = "t2.micro"
+  security_groups = [module.security.private_security_group_id]
+}
+
+module "load-balance" {
+  source = "../modules/load-balance"
+  region = var.region
+  vpc_id = module.networking.vpc_id
+  load_balance_subnet_ids = module.networking.public_subnet_ids
+  load_balance_security_group_ids = [module.security.public_security_group_id]
+}
+
 module "autoscaling" {
-  source = "./modules/autoscaling"
-
-  ami_id                   = "ami-1234567890"  # Thay bằng AMI phù hợp
-  instance_type            = "t3.micro"
-  instance_security_group_id = aws_security_group.backend_sg.id
-  private_subnet_ids       = var.private_subnet_ids
-  target_group_arn         = aws_lb_target_group.backend.arn
-  min_size                 = 2
-  max_size                 = 5
-  desired_capacity         = 2
-  db_endpoint              = aws_db_instance.mysql.endpoint
-  db_name                  = var.db_name
-  db_username              = var.db_username
-  db_password              = var.db_password
-  key_name                 = "my-key-pair"
-
-  tags = {
-    Environment = "production"
-    Application = "backend"
-  }
+  source = "../modules/auto-scale"
+  ami_id                     = "ami-1234567890"  
+  instance_type              = "t2.micro"
+  instance_security_group_id = module.security.private_security_group_id
+  private_subnet_ids         = module.networking.private_subnet_ids
+  target_group_arn           = module.load-balance.backend_target_group_arn
+  db_endpoint                = module.database.rds_endpoint
+  db_name                    = var.db_name
+  db_username                = var.db_username
+  db_password                = var.db_password
+  key_name                   = "lptdevops"
 }

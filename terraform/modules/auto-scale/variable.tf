@@ -24,24 +24,6 @@ variable "target_group_arn" {
   type        = string
 }
 
-variable "min_size" {
-  description = "Minimum number of instances"
-  type        = number
-  default     = 2
-}
-
-variable "max_size" {
-  description = "Maximum number of instances"
-  type        = number
-  default     = 5
-}
-
-variable "desired_capacity" {
-  description = "Desired number of instances"
-  type        = number
-  default     = 2
-}
-
 variable "db_endpoint" {
   description = "RDS endpoint URL"
   type        = string
@@ -68,10 +50,4 @@ variable "key_name" {
   description = "SSH key pair name"
   type        = string
   default     = null
-}
-
-variable "tags" {
-  description = "Additional tags"
-  type        = map(string)
-  default     = {}
 }

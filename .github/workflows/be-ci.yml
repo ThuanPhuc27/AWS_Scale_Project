@@ -1,0 +1,32 @@
+name: CI Backend
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - 'task-manager-be/**' 
+
+  pull_request:
+    branches: [ "main" ]
+    paths:
+      - 'task-manager-be/**'  
+
+jobs:
+  Push_Image:
+    runs-on: ubuntu-latest
+
+    env: 
+      IMAGE_NAME: ${{ secrets.DOCKERHUB_USER }}/taskmanager_be:latest
+
+    steps: 
+    - name: Checkout source code
+      uses: actions/checkout@v4
+
+    - name: Docker build image
+      run: docker build -t $IMAGE_NAME -f ./task-manager-be/Dockerfile .
+
+    - name: Log in to Docker Hub
+      run: echo "${{ secrets.DOCKERHUB_PASS }}" | docker login -u "${{ secrets.DOCKERHUB_USER }}" --password-stdin
+
+    - name: Push Docker image
+      run: docker push $IMAGE_NAME

@@ -1,5 +1,5 @@
 resource "aws_launch_template" "backend" {
-  name_prefix   = "backend-template-"
+  name_prefix   = "backend-template"
   image_id      = var.ami_id
   instance_type = var.instance_type
   key_name      = var.key_name
@@ -7,23 +7,6 @@ resource "aws_launch_template" "backend" {
   network_interfaces {
     associate_public_ip_address = false
     security_groups            = [var.instance_security_group_id]
-  }
-
-  user_data = base64encode(templatefile("${path.module}/user_data.sh", {
-    db_host     = var.db_endpoint
-    db_name     = var.db_name
-    db_username = var.db_username
-    db_password = var.db_password
-  }))
-
-  tag_specifications {
-    resource_type = "instance"
-    tags = merge(
-      var.tags,
-      {
-        Name = "backend-instance"
-      }
-    )
   }
 
   lifecycle {
@@ -35,24 +18,15 @@ resource "aws_autoscaling_group" "backend" {
   name_prefix          = "backend-asg-"
   vpc_zone_identifier  = var.private_subnet_ids
   target_group_arns    = [var.target_group_arn]
-  min_size             = var.min_size
-  max_size             = var.max_size
-  desired_capacity     = var.desired_capacity
+  min_size             = 1
+  max_size             = 3
+  desired_capacity     = 1
   health_check_type    = "ELB"
   termination_policies = ["OldestInstance"]
 
   launch_template {
     id      = aws_launch_template.backend.id
     version = "$Latest"
-  }
-
-  dynamic "tag" {
-    for_each = var.tags
-    content {
-      key                 = tag.key
-      value               = tag.value
-      propagate_at_launch = true
-    }
   }
 
   lifecycle {

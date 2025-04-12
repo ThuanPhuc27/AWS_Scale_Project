@@ -47,8 +47,6 @@ resource "aws_security_group" "bastion_security_group" {
   }
 }
 
-
-
 resource "aws_security_group" "private_security_group" {
   name        = "private_security_group"
   description = "private_security_group"
@@ -77,7 +75,6 @@ resource "aws_security_group" "private_security_group" {
   }
 
 }
-
 
 resource "aws_security_group" "database_security_group" {
   name        = "database_security_group"

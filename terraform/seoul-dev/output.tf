@@ -37,3 +37,36 @@ output "database_security_group_id" {
 output "bastion_security_group_id" {
   value = module.security.bastion_security_group_id
 }
+
+################################################################################
+# Frontend Module - Variables 
+################################################################################
+
+output "s3_bucket_name" {
+  value = module.frontend.s3_bucket_name
+}
+
+################################################################################
+# Bastion Module - Variables 
+################################################################################
+
+output "bastion_ip" {
+  value = module.bastion.instance_ip_addr_public
+}
+
+################################################################################
+# Database Module - Variables 
+################################################################################
+
+output "mysql_endpoint" {
+  description = "The endpoint of the MySQL RDS instance"
+  value       = module.database.rds_endpoint
+}
+
+################################################################################
+# ALB Module - Variables 
+################################################################################
+
+# output "backend-endpoint" {
+#   value = module.load-balance.alb_dns
+# }
